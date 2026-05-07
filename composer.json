@@ -18,9 +18,16 @@
     "require": {
         "php": "^8.4",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0||^13.0"
+        "illuminate/contracts": "^11.0||^12.0||^13.0",
+        "spatie/image": "^3.3.2",
+        "maennchen/zipstream-php": "^3.1",
+        "spatie/temporary-directory": "^2.2"
     },
     "require-dev": {
+        "ext-imagick": "*",
+        "ext-pdo_sqlite": "*",
+        "ext-zip": "*",
+        "guzzlehttp/guzzle": "^7.8.1",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.8",
         "larastan/larastan": "^3.0",
@@ -32,15 +39,20 @@
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0"
     },
+    "suggest": {
+        "spatie/laravel-translation": "Use 'spatie' translatable mode for multi-language media fields (JSON columns)",
+        "astrotomic/laravel-translatable": "Use 'astrotomic' translatable mode for multi-language media fields (separate translations table)",
+        "php-ffmpeg/php-ffmpeg": "Required for video thumbnail generation via FFMPEG"
+    },
     "autoload": {
         "psr-4": {
-            "Jegex\\LaravelMedia\\": "src/",
-            "Jegex\\LaravelMedia\\Database\\Factories\\": "database/factories/"
+            "Jegex\\Media\\": "src/",
+            "Jegex\\Media\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jegex\\LaravelMedia\\Tests\\": "tests/",
+            "Jegex\\Media\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -62,10 +74,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Jegex\\LaravelMedia\\LaravelMediaServiceProvider"
+                "Jegex\\Media\\LaravelMediaServiceProvider"
             ],
             "aliases": {
-                "LaravelMedia": "Jegex\\LaravelMedia\\Facades\\LaravelMedia"
+                "LaravelMedia": "Jegex\\Media\\Facades\\LaravelMedia"
             }
         }
     },

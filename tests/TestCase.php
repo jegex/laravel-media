@@ -1,10 +1,11 @@
 <?php
 
-namespace Jegex\LaravelMedia\Tests;
+namespace Jegex\Media\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
+use Jegex\Media\LaravelMediaServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Jegex\LaravelMedia\LaravelMediaServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +14,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Jegex\\LaravelMedia\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Jegex\\Media\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
@@ -28,10 +29,8 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
+        foreach (File::allFiles(__DIR__.'/../database/migrations') as $migration) {
             (include $migration->getRealPath())->up();
-         }
-         */
+        }
     }
 }

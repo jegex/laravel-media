@@ -1,5 +1,5 @@
 <?php
 
-use Jegex\LaravelMedia\Tests\TestCase;
+use Jegex\Media\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

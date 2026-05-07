@@ -1,6 +1,6 @@
 <?php
 
-namespace Jegex\LaravelMedia\Commands;
+namespace Jegex\Media\Commands;
 
 use Illuminate\Console\Command;
 

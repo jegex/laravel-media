@@ -1,6 +1,6 @@
 <?php
 
-namespace Jegex\LaravelMedia\Database\Factories;
+namespace Jegex\Media\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
