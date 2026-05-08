@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-media` will be documented in this file.
 
+## v1.0.0-alpha.2 - 2026-05-08
+
+### Fixed
+- **Migration**: JSON columns (`manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`) changed from `->default('[]')` to `->nullable()` to fix SQLite NOT NULL constraint issues
+- **Migration**: `media_translations.media_id` refactored to use `foreignId()->constrained()->cascadeOnDelete()` (cleaner, idiomatic Laravel)
+
 ## v1.0.0-alpha.1 - 2026-05-08
 
 ### Added

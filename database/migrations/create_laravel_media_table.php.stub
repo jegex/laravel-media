@@ -32,10 +32,10 @@ return new class extends Migration
             $table->string('disk');
             $table->string('conversions_disk')->nullable();
             $table->unsignedBigInteger('size');
-            $table->json('manipulations')->default('[]');
-            $table->json('custom_properties')->default('[]');
-            $table->json('generated_conversions')->default('[]');
-            $table->json('responsive_images')->default('[]');
+            $table->json('manipulations')->nullable();
+            $table->json('custom_properties')->nullable();
+            $table->json('generated_conversions')->nullable();
+            $table->json('responsive_images')->nullable();
             $table->unsignedInteger('order_column')->nullable()->index();
 
             $table->nullableTimestamps();
@@ -44,7 +44,7 @@ return new class extends Migration
         if (config('media.translatable') === 'astrotomic') {
             Schema::create('media_translations', function (Blueprint $table) {
                 $table->id();
-                $table->integer('media_id')->unsigned();
+                $table->foreignId('media_id')->constrained('media')->cascadeOnDelete();
                 $table->string('locale')->index();
                 $table->string('name');
                 $table->text('alt_txt')->nullable();
@@ -52,7 +52,6 @@ return new class extends Migration
                 $table->text('description')->nullable();
 
                 $table->unique(['media_id', 'locale']);
-                $table->foreign('media_id')->references('id')->on('media')->onDelete('cascade');
             });
         }
     }
