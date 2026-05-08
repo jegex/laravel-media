@@ -267,6 +267,6 @@ Berdasarkan config, package memerlukan:
 - [x] `composer.json` updated: namespace + spatie/image-optimizer dependency
 - [x] `config/media.php` - semua use statements uncommented + vapor uploads config
 - [x] Migration JSON columns default ke '[]' untuk menghindari NOT NULL constraint
-- [x] Tests: 65 tests passing
+- [x] Tests: 91 tests passing
 - [x] PHPStan level 5: No errors
 - [x] Documentation (README.md)

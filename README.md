@@ -199,7 +199,6 @@ echo $media->toHtml();
 ```
 
 This is useful for global media libraries, CDN assets, or when you don't need to associate media with a specific model.
-```
 
 ### Retrieving Media
 

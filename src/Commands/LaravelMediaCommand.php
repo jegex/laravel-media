@@ -8,11 +8,11 @@ class LaravelMediaCommand extends Command
 {
     public $signature = 'laravel-media';
 
-    public $description = 'My command';
+    public $description = 'Display media library statistics and info';
 
     public function handle(): int
     {
-        $this->comment('All done');
+        $this->comment('Laravel Media v' . config('media.version', '1.0.0-alpha.1'));
 
         return self::SUCCESS;
     }

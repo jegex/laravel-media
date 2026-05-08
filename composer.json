@@ -1,6 +1,6 @@
 {
     "name": "jegex/laravel-media",
-    "description": "This is my package laravel-media",
+    "description": "Laravel media library — upload, image conversions, responsive images, video thumbnails, ZIP export, and more",
     "keywords": [
         "jegex",
         "laravel",
