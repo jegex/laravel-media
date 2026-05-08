@@ -12,7 +12,7 @@ class LaravelMediaCommand extends Command
 
     public function handle(): int
     {
-        $this->comment('Laravel Media v' . config('media.version', '1.0.0-alpha.1'));
+        $this->comment('Laravel Media v'.config('media.version', '1.0.0-alpha.1'));
 
         return self::SUCCESS;
     }
