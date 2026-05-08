@@ -3,9 +3,9 @@
 namespace Jegex\Media\MediaCollections\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +37,8 @@ use Jegex\Media\MediaCollections\Models\Observers\MediaObserver;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
+
+#[ObservedBy(MediaObserver::class)]
 class Media extends Model
 {
     use HasFactory;
@@ -50,21 +52,9 @@ class Media extends Model
         'responsive_images' => 'array',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::observe(MediaObserver::class);
-    }
-
     public function model(): MorphTo
     {
         return $this->morphTo();
-    }
-
-    public function translations(): HasMany
-    {
-        return $this->hasMany(MediaTranslation::class, 'media_id');
     }
 
     public static function createFromFile(string $filePath, array $options = []): self
@@ -219,140 +209,22 @@ class Media extends Model
 
     public function getName(): string
     {
-        if (config('media.translatable') === 'spatie') {
-            return $this->getTranslatableValue('name');
-        }
-
-        if (config('media.translatable') === 'astrotomic') {
-            return $this->getAstrotomicValue('name');
-        }
-
-        if (is_array($this->name)) {
-            return $this->name[app()->getLocale()] ?? $this->name['en'] ?? '';
-        }
-
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAltTxt(): string
     {
-        if (config('media.translatable') === 'spatie') {
-            return $this->getTranslatableValue('alt_txt');
-        }
-
-        if (config('media.translatable') === 'astrotomic') {
-            return $this->getAstrotomicValue('alt_txt');
-        }
-
-        if (is_array($this->alt_txt)) {
-            return $this->alt_txt[app()->getLocale()] ?? $this->alt_txt['en'] ?? '';
-        }
-
         return $this->alt_txt ?? '';
     }
 
     public function getCaption(): string
     {
-        if (config('media.translatable') === 'spatie') {
-            return $this->getTranslatableValue('caption');
-        }
-
-        if (config('media.translatable') === 'astrotomic') {
-            return $this->getAstrotomicValue('caption');
-        }
-
-        if (is_array($this->caption)) {
-            return $this->caption[app()->getLocale()] ?? $this->caption['en'] ?? '';
-        }
-
         return $this->caption ?? '';
     }
 
     public function getDescription(): string
     {
-        if (config('media.translatable') === 'spatie') {
-            return $this->getTranslatableValue('description');
-        }
-
-        if (config('media.translatable') === 'astrotomic') {
-            return $this->getAstrotomicValue('description');
-        }
-
-        if (is_array($this->description)) {
-            return $this->description[app()->getLocale()] ?? $this->description['en'] ?? '';
-        }
-
         return $this->description ?? '';
-    }
-
-    protected function getTranslatableValue(string $key): string
-    {
-        $value = $this->$key;
-
-        if (is_string($value) && json_validate($value)) {
-            $value = json_decode($value, true);
-        }
-
-        if (! is_array($value)) {
-            return $value ?? '';
-        }
-
-        return $value[app()->getLocale()] ?? $value['en'] ?? '';
-    }
-
-    protected function getAstrotomicValue(string $key): string
-    {
-        $locale = app()->getLocale();
-
-        $translation = $this->translations()
-            ->where('locale', $locale)
-            ->first();
-
-        if ($translation && ! empty($translation->$key)) {
-            return $translation->$key;
-        }
-
-        $fallbackTranslation = $this->translations()
-            ->where('locale', config('app.fallback_locale'))
-            ->first();
-
-        if ($fallbackTranslation && ! empty($fallbackTranslation->$key)) {
-            return $fallbackTranslation->$key;
-        }
-
-        return '';
-    }
-
-    public function setTranslation(string $key, string $locale, $value): self
-    {
-        $translations = $this->$key;
-
-        if (is_string($translations) && json_validate($translations)) {
-            $translations = json_decode($translations, true);
-        }
-
-        if (! is_array($translations)) {
-            $translations = [];
-        }
-
-        $translations[$locale] = $value;
-
-        $this->$key = $translations;
-
-        return $this;
-    }
-
-    public function getTranslation(string $key, ?string $locale = null): string
-    {
-        $locale = $locale ?: app()->getLocale();
-
-        $value = $this->$key;
-
-        if (! is_array($value)) {
-            return $value ?? '';
-        }
-
-        return $value[$locale] ?? $value['en'] ?? '';
     }
 
     public function setHighestOrderNumber(): void

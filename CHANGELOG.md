@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-media` will be documented in this file.
 
+## v1.0.0-alpha.3 - 2026-05-08
+
+### Removed
+- **Translatable support**: Removed entire translatable feature (config `translatable`, `MediaTranslation` model, `setTranslation`/`getTranslation`/`getTranslatableValue`/`getAstrotomicValue` methods, migration conditional columns and `media_translations` table, `suggest` packages in composer.json, README section)
+- **Dependencies**: Removed `spatie/laravel-translation` and `astrotomic/laravel-translatable` from suggest
+
+### Changed
+- **Migration**: Simplified to always create string columns directly (no conditional logic)
+- **Media model**: Getters (`getName`, `getAltTxt`, `getCaption`, `getDescription`) simplified to return values directly
+
 ## v1.0.0-alpha.2 - 2026-05-08
 
 ### Fixed

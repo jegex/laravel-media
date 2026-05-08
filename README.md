@@ -20,7 +20,6 @@ Powerful media management package for Laravel applications. Handle file uploads,
 - [Image Conversions](#image-conversions)
 - [Responsive Images](#responsive-images)
 - [Queue System](#queue-system)
-- [Translatable Support](#translatable-support)
 - [Vapor Uploads](#vapor-uploads)
 - [ZIP Export](#zip-export)
 - [Facade Usage](#facade-usage)
@@ -51,38 +50,7 @@ php artisan vendor:publish --tag="media-config"
 php artisan vendor:publish --tag="media-migrations"
 ```
 
-#### Step 2: Choose Your Translatable Mode
-
-Open the published config file `config/media.php` and set the `translatable` option based on your needs:
-
-**Option A: No Translatable (Default)**
-Use simple string columns. No extra packages needed.
-
-```php
-'translatable' => false,
-```
-
-**Option B: Spatie Translatable**
-Use JSON columns for multi-language support.
-
-```php
-'translatable' => 'spatie',
-```
-
-> Requires your app to handle JSON columns. Works out of the box with the published migration.
-
-**Option C: Astrotomic Translatable**
-Use a separate `media_translations` table.
-
-```php
-'translatable' => 'astrotomic',
-```
-
-> Requires `astrotomic/laravel-translatable` package. The migration will automatically create the `media_translations` table.
-
-> **Important:** If you change this setting after running migration, you must create a new migration to alter the column types (STRING → JSON for spatie, or add `media_translations` table for astrotomic).
-
-#### Step 3: Run Migration
+#### Step 2: Run Migration
 
 ```bash
 php artisan migrate
@@ -376,52 +344,6 @@ $this->addMediaConversion('preview')
 | `PerformConversionsJob` | Processes image conversions |
 | `GenerateResponsiveImagesJob` | Generates responsive image variations |
 
-## Translatable Support
-
-The package supports three modes for translatable fields (`name`, `alt_txt`, `caption`, `description`):
-
-### Default Mode (disabled)
-
-Fields are stored as simple strings:
-
-```php
-config()->set('media.translatable', false); // Default
-```
-
-### Spatie Mode
-
-Uses JSON columns for translations:
-
-```php
-config()->set('media.translatable', 'spatie');
-```
-
-```php
-$media->setTranslation('name', 'en', 'My Image');
-$media->setTranslation('name', 'id', 'Gambar Saya');
-
-$media->getTranslation('name', 'en'); // 'My Image'
-$media->getName(); // Returns translation for current locale
-```
-
-### Astrotomic Mode
-
-Uses a separate `media_translations` table:
-
-```php
-config()->set('media.translatable', 'astrotomic');
-```
-
-```php
-$media->translations()->create([
-    'locale' => 'en',
-    'name' => 'My Image',
-    'alt_txt' => 'Alt text',
-]);
-
-$media->getName(); // Returns translation for current locale
-```
-
 ## Vapor Uploads
 
 For Laravel Vapor deployments, enable the upload route:
@@ -517,9 +439,6 @@ The full configuration file (`config/media.php`):
 
 ```php
 return [
-    // Translatable mode: false, 'spatie', 'astrotomic'
-    'translatable' => false,
-
     // Default storage disk
     'disk_name' => env('MEDIA_DISK', 'public'),
 

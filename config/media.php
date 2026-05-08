@@ -28,14 +28,6 @@ use Spatie\ImageOptimizer\Optimizers\Svgo;
 return [
 
     /*
-     * The translatable where use translation package
-     * 'spatie' to use package spatie/laravel-translation
-     * 'astrotomic' to use package astrotomic/laravel-translation
-     * 'false' to disable translatable
-     */
-    'translatable' => false,
-
-    /*
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */

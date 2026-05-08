@@ -14,19 +14,10 @@ return new class extends Migration
             $table->nullableMorphs('model');
             $table->uuid()->nullable()->unique();
             $table->string('collection_name');
-
-            if (!config('media.translatable')) {
-                $table->string('name');
-                $table->text('alt_txt')->nullable();
-                $table->text('caption')->nullable();
-                $table->text('description')->nullable();
-            } elseif (config('media.translatable') === 'spatie') {
-                $table->json('name');
-                $table->json('alt_txt')->nullable();
-                $table->json('caption')->nullable();
-                $table->json('description')->nullable();
-            }
-
+            $table->string('name');
+            $table->text('alt_txt')->nullable();
+            $table->text('caption')->nullable();
+            $table->text('description')->nullable();
             $table->string('file_name');
             $table->string('mime_type')->nullable();
             $table->string('disk');
@@ -40,28 +31,10 @@ return new class extends Migration
 
             $table->nullableTimestamps();
         });
-
-        if (config('media.translatable') === 'astrotomic') {
-            Schema::create('media_translations', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('media_id')->constrained('media')->cascadeOnDelete();
-                $table->string('locale')->index();
-                $table->string('name');
-                $table->text('alt_txt')->nullable();
-                $table->text('caption')->nullable();
-                $table->text('description')->nullable();
-
-                $table->unique(['media_id', 'locale']);
-            });
-        }
     }
 
     public function down()
     {
-        if (config('media.translatable') === 'astrotomic') {
-            Schema::dropIfExists('media_translations');
-        }
-
         Schema::dropIfExists('media');
     }
 };

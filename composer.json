@@ -40,8 +40,6 @@
         "phpstan/phpstan-phpunit": "^2.0"
     },
     "suggest": {
-        "spatie/laravel-translation": "Use 'spatie' translatable mode for multi-language media fields (JSON columns)",
-        "astrotomic/laravel-translatable": "Use 'astrotomic' translatable mode for multi-language media fields (separate translations table)",
         "php-ffmpeg/php-ffmpeg": "Required for video thumbnail generation via FFMPEG"
     },
     "autoload": {
