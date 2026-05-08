@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-media` will be documented in this file.
 
+## v1.0.0-alpha.5 - 2026-05-08
+
+### Added
+
+- **Configurable `path_type`**: choose between `uuid` (default) or `id` for media directory naming
+  - Set via `MEDIA_PATH_TYPE` env or `media.path_type` config
+  - `uuid`: directories use media UUID — consistent and recommended
+  - `id`: directories use media database ID (saves model first)
+  
+- **Temp file cleanup**: `createFromString()` and `createFromUrl()` now clean up temp files after creation
+
+### Fixed
+
+- **Path/URL inconsistency**: media paths now consistently use the configured path type
+  - Auto-generate UUID in `MediaObserver::creating()` hook
+  - Fixes mismatch between stored file path and generated URL
+  
+
 ## v1.0.0-alpha.4 - 2026-05-08
 
 ### Fixed
