@@ -23,6 +23,10 @@ class DefaultPathGenerator
 
     protected function getBasePath(Media $media): string
     {
+        if (config('media.path_type') === 'id') {
+            return (string) ($media->getKey() ?? $media->uuid);
+        }
+
         return $media->uuid;
     }
 }

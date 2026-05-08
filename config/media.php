@@ -287,6 +287,14 @@ return [
     'prefix' => env('MEDIA_PREFIX', ''),
 
     /*
+     * The base directory naming strategy: 'uuid' (default) or 'id'.
+     * - 'uuid': directories named after the media UUID (consistent before/after save)
+     * - 'id': directories named after the media database ID (requires save first)
+     * Changing this after media exists will break existing URLs.
+     */
+    'path_type' => env('MEDIA_PATH_TYPE', 'uuid'),
+
+    /*
      * When forcing lazy loading, media will be loaded even if you don't eager load media and you have
      * disabled lazy loading globally in the service provider.
      */

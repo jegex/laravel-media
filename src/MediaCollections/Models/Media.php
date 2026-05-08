@@ -136,6 +136,11 @@ class Media extends Model
         $media->responsive_images = [];
 
         $storageDisk = Storage::disk($disk);
+
+        if (config('media.path_type') === 'id') {
+            $media->save();
+        }
+
         $destination = $media->getPath().'/'.$fileName;
 
         $fileStream = fopen($filePath, 'r');
@@ -144,7 +149,9 @@ class Media extends Model
             fclose($fileStream);
         }
 
-        $media->save();
+        if (config('media.path_type') !== 'id') {
+            $media->save();
+        }
 
         return $media;
     }
