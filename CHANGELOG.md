@@ -2,25 +2,39 @@
 
 All notable changes to `laravel-media` will be documented in this file.
 
+## v1.0.0-alpha.4 - 2026-05-08
+
+### Fixed
+
+- **Path/URL inconsistency**: media paths now consistently use UUID instead of model ID
+  - `DefaultPathGenerator::getBasePath()` always returns UUID
+  - Auto-generate UUID in `MediaObserver::creating()` for all creation paths
+  - Fixes mismatch between stored file path (UUID-based) and generated URL (ID-based)
+  
+
 ## v1.0.0-alpha.3 - 2026-05-08
 
 ### Removed
+
 - **Translatable support**: Removed entire translatable feature (config `translatable`, `MediaTranslation` model, `setTranslation`/`getTranslation`/`getTranslatableValue`/`getAstrotomicValue` methods, migration conditional columns and `media_translations` table, `suggest` packages in composer.json, README section)
 - **Dependencies**: Removed `spatie/laravel-translation` and `astrotomic/laravel-translatable` from suggest
 
 ### Changed
+
 - **Migration**: Simplified to always create string columns directly (no conditional logic)
 - **Media model**: Getters (`getName`, `getAltTxt`, `getCaption`, `getDescription`) simplified to return values directly
 
 ## v1.0.0-alpha.2 - 2026-05-08
 
 ### Fixed
+
 - **Migration**: JSON columns (`manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`) changed from `->default('[]')` to `->nullable()` to fix SQLite NOT NULL constraint issues
 - **Migration**: `media_translations.media_id` refactored to use `foreignId()->constrained()->cascadeOnDelete()` (cleaner, idiomatic Laravel)
 
 ## v1.0.0-alpha.1 - 2026-05-08
 
 ### Added
+
 - **Foundation**: Media Eloquent model, HasMedia trait, FileAdder for upload & attach, MediaObserver for lifecycle events
 - **Storage**: DefaultPathGenerator, DefaultFileNamer, DefaultUrlGenerator, DefaultFileRemover
 - **Image Conversions**: ImageGenerator base class + 6 generators (GenericImage, Webp, Avif, Pdf, Svg, Video), FileManipulator with spatie/image, Conversion definition class, PerformConversionsJob
