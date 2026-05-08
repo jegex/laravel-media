@@ -3,6 +3,7 @@
 namespace Jegex\Media\MediaCollections\Models\Observers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Jegex\Media\Conversions\ConversionCollection;
 use Jegex\Media\Conversions\FileManipulator;
 use Jegex\Media\Conversions\Jobs\PerformConversionsJob;
@@ -14,6 +15,10 @@ class MediaObserver
 {
     public function creating(Media $media): void
     {
+        if (empty($media->uuid)) {
+            $media->uuid = (string) Str::uuid();
+        }
+
         if (empty($media->order_column)) {
             $media->setHighestOrderNumber();
         }

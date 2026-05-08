@@ -23,8 +23,6 @@ class DefaultPathGenerator
 
     protected function getBasePath(Media $media): string
     {
-        $key = $media->getKey();
-
-        return $key ?: $media->uuid;
+        return $media->uuid;
     }
 }
