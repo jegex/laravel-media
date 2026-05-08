@@ -37,7 +37,6 @@ use Jegex\Media\MediaCollections\Models\Observers\MediaObserver;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-
 #[ObservedBy(MediaObserver::class)]
 class Media extends Model
 {
