@@ -69,7 +69,11 @@ class Media extends Model
     {
         $tempPath = static::createTemporaryFile($content, $fileName);
 
-        return static::createMediaFromPath($tempPath, $options);
+        try {
+            return static::createMediaFromPath($tempPath, $options);
+        } finally {
+            @unlink($tempPath);
+        }
     }
 
     public static function createFromBase64(string $base64Content, string $fileName, array $options = []): self
@@ -90,7 +94,11 @@ class Media extends Model
 
         $tempFile = $downloaderInstance->getTempFile($url);
 
-        return static::createMediaFromPath($tempFile, $options);
+        try {
+            return static::createMediaFromPath($tempFile, $options);
+        } finally {
+            @unlink($tempFile);
+        }
     }
 
     protected static function createMediaFromPath(string $filePath, array $options): self
